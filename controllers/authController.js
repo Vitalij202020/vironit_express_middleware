@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const userService = require("../services/userServices");
+const uuid = require('uuid')
 
 
 const getToken = (id, name) => {
@@ -12,6 +13,8 @@ const getToken = (id, name) => {
 const signUp = async (req, res) => {
     try {
         const { name, email, password } = req.body
+        const id = uuid.v4()
+        console.log(id)
         if (!name || !email || !password) {
             return res.status(400).json({message: 'Please include a name, email and password!!!'})
         }
@@ -20,7 +23,7 @@ const signUp = async (req, res) => {
             return res.status(400).json({message: 'User with such an email has already been registered!!!'})
         }
         const hashPassword = bcrypt.hashSync(password, 5)
-        const answer = await userService.addUser({name, email, password: hashPassword})
+        const answer = await userService.addUser({id, name, email, password: hashPassword})
         res.json(answer);
     } catch (e) {
         console.log(e)
