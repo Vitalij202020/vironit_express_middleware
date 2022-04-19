@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express');
 const userRoutes = require('./routes/usersRoutes')
 const authRouter = require('./routes/authRouter')
+const imageRoutes = require('./routes/imgeRoutes')
 const sequelize = require('./db')
 const models = require('./models/userModel')
 
@@ -15,6 +16,8 @@ app.use(express.urlencoded({ extended: false }));
 // Users API Routes
 app.use('/', userRoutes);
 app.use('/api', authRouter);
+app.use('/image', imageRoutes);
+
 
 const PORT = process.env.PORT || 5000;
 
