@@ -3,7 +3,7 @@ const express = require('express');
 const userRoutes = require('./routes/usersRoutes')
 const authRouter = require('./routes/authRouter')
 const imageRoutes = require('./routes/imgeRoutes')
-const sequelize = require('./db')
+const mongoose = require('mongoose')
 const models = require('./models/userModel')
 
 
@@ -21,14 +21,9 @@ app.use('/image', imageRoutes);
 
 const PORT = process.env.PORT || 5000;
 
-const start = async () => {
-    try {
-        await sequelize.authenticate()
-        await sequelize.sync()
-        app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
-    } catch (e) {
-        console.log(e)
-    }
-}
-
-start()
+mongoose.connect(process.env.CONNECT_DB).then(() => {
+    console.log("Connected to DB!!!")
+    app.listen(PORT, () => console.log(`server started on port - ${PORT} `))
+}).catch(() => {
+    console.log("Error connecting to DB")
+})

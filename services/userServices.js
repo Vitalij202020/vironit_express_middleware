@@ -1,30 +1,31 @@
-const User = require('../models/userModel')
+const UserModel = require('../models/userModel')
 
 class UserService {
 
-    getUsers () {
-       return User.findAll()
+    async createUser (user) {
+        const newUser = new UserModel(user)
+        return await newUser.save()
     }
 
-    getUserById(id) {
-        return User.findOne({where: { id }})
+    async getAllUsers () {
+        return await UserModel.find()
     }
 
-    getUserByEmail(email) {
-        return User.findOne({where: { email }})
+    async getUserById(id) {
+        return await UserModel.findById(id)
     }
 
-    addUser(newUser) {
-        console.log(newUser.email)
-        return User.create(newUser)
+    async getUserByEmail(email) {
+        return await UserModel.find({}).where('email').equals(email)
     }
 
-    changeUser(id, {name, email, password}) {
-        return User.update({name, email, password},{where: { id }})
+
+    async updateUser(id, newUser) {
+        return await UserModel.findByIdAndUpdate(id, newUser, {new: true})
     }
 
-    deleteUser(id) {
-        return User.destroy({where: { id }})
+    async deleteUser(id) {
+        return await UserModel.findByIdAndDelete(id)
     }
 }
 
