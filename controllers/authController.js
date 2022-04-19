@@ -14,10 +14,6 @@ const signUp = async (req, res) => {
     try {
         const { name, email, password } = req.body
         const id = uuid.v4()
-        console.log(id)
-        if (!name || !email || !password) {
-            return res.status(400).json({message: 'Please include a name, email and password!!!'})
-        }
         const user = await userService.getUserByEmail(email)
         if(user) {
             return res.status(400).json({message: 'User with such an email has already been registered!!!'})
