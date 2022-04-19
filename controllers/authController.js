@@ -22,7 +22,6 @@ const signUp = async (req, res) => {
         const answer = await userService.addUser({id, name, email, password: hashPassword})
         res.json(answer);
     } catch (e) {
-        console.log(e)
         res.status(400).json({message: 'Registration error'})
     }
 }
@@ -41,7 +40,6 @@ const signIn = async (req, res) => {
         const token = getToken(user.id, user.name)
         return res.json({token})
     } catch (e) {
-        console.log(e)
         res.status(400).json({message: 'Login error'})
     }
 }

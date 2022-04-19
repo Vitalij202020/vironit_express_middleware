@@ -19,8 +19,8 @@ class UserService {
         return User.create(newUser)
     }
 
-    changeUser(id, {name, email}) {
-        return User.update({name, email},{where: { id }})
+    changeUser(id, {name, email, password}) {
+        return User.update({name, email, password},{where: { id }})
     }
 
     deleteUser(id) {
